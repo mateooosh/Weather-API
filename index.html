@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pl">
+ 	<head>
+    	<meta charset="utf-8" />
+    	<title>Weather</title>
+    	<link rel="stylesheet" href="style.css" type="text/css"/>
+    	<link rel="stylesheet" href="css/fontello.css" type="text/css"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Font -->
+		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    	<!-- FAVICON -->
+    	<link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAElLSgTn5+T/09PR/+fn5P/n5+T/5eXi/+fn5P/T09H/5+fk/+fn5P/l5eL/5+fk/9PT0f/n5+T/Pz8+AS8xMQPn5+T/1dXT/+fn5P/Y2db/5+fk/+fn5P/V1dP/5+fk/9jZ1v/n5+T/5+fk/9XV0//n5+T/2NnW/+fn5P8AAAAA5+fk/+fn5P/T09H/5+fk/+bm4//n5+T/5+fk/9PT0f/n5+T/5ubj/+fn5P/n5+T/09PR/+fn5P/m5uP/5+fk/wAAAADj4+D/5+fk/9PT0f/n5+T/5+fk/+Pj4P/n5+T/09PR/+fn5P/n5+T/4+Pg/+fn5P/T09H/5+fk/+fn5P8AAAAAAAAAANTU0v/n5+T/3d7b/+fn5P/n5+T/1NTS/+fn5P/d3tv/5+fk/+fn5P/U1NL/5+fk/93e2//n5+T/AAAAAAAAAADn5+T/09PR/+fn5P/n5+T/5+fk/+fn5P/T09H/5+fk/+fn5P/n5+T/5+fk/9PT0f/n5+T/AAAAAAAAAABex+//XMDl/+fn5P/U1NL/5+fk/+fn5P/d3tv/5+fk/9TU0v/n5+T/5+fk/93e2//n5+T/AAAAAAAAAAAAAAAAXsfv/17H7/9at9r/Xsfv/+Pj4P/n5+T/5+fk/9PT0f/n5+T/4+Pg/+fn5P/n5+T/AAAAAAAAAABAREQGAAAAAF7H7/9exu7/Xsfv/1q32v9ex+//Xsfv/+bm4//n5+T/09PR/+fn5P/n5+T/5ubj/wAAAAAAAAAAAAAAAAAAAABex+//Xsfv/1u74P9ex+//W7nc/17H7/8AAAAAAAAAAOfn5P8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALzExA17H7/9ex+//Wrfa/17H7/8vMTEDAAAAAAAAAAAAAAAAAAAAAC8xMQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AACAAwAAAAEAAAAAAACAAAAAwAAAAMABAACAAwAAgAcAAIAHAACBvwAAw/8AAP//AAD//wAA//8AAA==" rel="icon" type="image/x-icon" />
+ 	</head>
+
+	<body>
+	    <main>
+			
+			<section class="form">
+				<input type="text" id="enteredCity" placeholder="Location">
+				<button id="submit"><i class="icon-search"></i></button>
+			</section>
+			<section id="frame">
+				<div id="date">Today, 28.06.2020</div>
+				<section class="info">
+					<div id="icon">
+						<embed id="embed" src="icons/11.svg" height="100" type="image/svg+xml" />
+					</div>
+
+					<div>
+						<div id="temperature">20.9°C</div>
+						<div id="place">Kielce, PL</div>
+					</div>
+
+
+					<div>
+						<div id="description">Overcast clouds</div>
+						<div class="flex space-between details">
+							<div>
+								PRESSURE
+								<div id="pressure">1001 hPa</div>
+							</div>
+							<div>
+								HUMIDITY
+								<div id="humidity">51 %</div>
+
+							</div>
+							<div>
+								SUNRISE
+								<div id="sunrise">5:59:15</div>
+							</div>
+						</div>
+
+						<div class="flex space-between details">
+							<div>
+								FEELS LIKE
+								<div id="feelsLike">13°C</div>
+							</div>
+							<div>
+								WIND
+								<div id="wind">11 km/h</div>
+							</div>
+							<div>
+								SUNSET
+								<div id="sunset">21:31:20</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</section>
+
+
+
+
+			<!-- <section class="next-days flex space-between">
+				<div class="which-day">
+					<div class="day">Friday</div>
+					<div class="date">29.05</div>
+				</div>
+
+				<div>
+					<embed class="embed" src="icons/10.svg" height="80" type="image/svg+xml" />
+				</div>
+				
+				<div>
+					<div class="temperature" >20.9°C</div>
+					<div class="description">Overcast clouds</div>
+					
+				</div>
+
+				<div class="m-top10 next-details">
+					<div class="flex space-between details">
+						<div>
+							PRESSURE
+							<div>1001 hPa</div>
+						</div>
+						<div>
+							HUMIDITY
+							<div>51 %</div>
+				
+						</div>
+						<div>
+							SUNRISE
+							<div>5:59:15</div>
+						</div>
+					</div>
+				
+					<div class="flex space-between details">
+						<div>
+							FEELS LIKE
+							<div>13°C</div>
+						</div>
+						<div>
+							WIND
+							<div>11 km/h</div>
+						</div>
+						<div>
+							SUNSET
+							<div>21:31:20</div>
+						</div>
+					</div>
+				</div>
+			</section> -->
+
+			
+			
+		</main>
+		
+		
+		
+		
+		
+		<!-- <embed src="icons/01.svg" width="100" type="image/svg+xml" /> -->
+		<!-- <svg viewBox="0 0 121.29 120.2" width="100">
+						<defs>
+							<style>
+								.cls-1 {
+									fill: #fcd100;
+								}
+							</style>
+						</defs>
+						<ellipse class="cls-1" cx="60.65" cy="60.1" rx="60.65" ry="60.1" />
+					</svg> -->
+
+		<script src="script.js"></script>
+	</body>
+
+</html>
