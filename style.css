@@ -170,6 +170,11 @@ input{
 	background-color: rgb(156, 65, 65);	
 }
 
+.next-details{
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
 
 
 /* ATOMIC CLASSES */
@@ -252,14 +257,95 @@ input{
 	#description{
 		margin-bottom: 20px;;
 	}
+
+	.next-days{
+		height: auto;
+	}
+
+	.which-day{
+		height:auto;
+		min-height: 80px;
+		width:80px;
+		min-width: 80px;
+	}
+
+	.day{
+		font-size:14px;   
+		/* 7/10 */
+		padding-top:16px;
+	}
+
+	.date{
+		font-size:25px;
+	}
+
+	.embed{
+		height:60px;
+		margin-top:10px;
+	}
+
+	.temperature{
+		font-size:29px;
+		margin-top: 12px;
+	}
+
+	.description{
+		font-size:14px;
+	}
+
+	.next-details{
+		margin-right:5px;
+		margin-top:0;
+	}
+
+	.next-details .details div{
+		font-size:9px;
+		width:50px;
+	}
+
+	.next-details .details div div{
+		font-size:10px;
+		margin-top:2px;
+	}
 }
 
-@media (max-width: 630px){
+@media (max-width: 450px){
+	.temperature{
+		font-size:20px;
+		margin-top: 20px;
+	}
+
+	.description{
+		font-size:10px;
+	}
+
+	.embed{
+		height:40px;
+		margin-top:20px;
+	}
+}
+
+
+@media (max-width: 370px){
 	.next-details{
 		display:none;
 	}
 
 	.temperature, .description{
 		margin-right: 5vw;
+	}
+
+	.embed{
+		height:60px;
+		margin-top:10px;
+	}
+
+	.temperature{
+		font-size:29px;
+		margin-top: 12px;
+	}
+
+	.description{
+		font-size:14px;
 	}
 }

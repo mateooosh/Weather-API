@@ -47,10 +47,10 @@ let get = () =>{
 		temperature.innerHTML = `${temperatureValue}\u00B0C`;
 		place.innerHTML = `${city}, ${data.sys.country}`;
 
-		feelsLike.innerHTML = `${Math.round((data.main.feels_like - 273.15)*10)/10} \u00B0C`
-		wind.innerHTML = `${Math.round(data.wind.speed*3.6*100)/100} km/h `;
-		humidity.innerHTML = `${data.main.humidity} %`;
-		pressure.innerHTML = `${data.main.pressure} hPa`;
+		feelsLike.innerHTML = `${Math.round((data.main.feels_like - 273.15)*10)/10}\u00B0C`
+		wind.innerHTML = `${Math.round(data.wind.speed*3.6*100)/100}km/h `;
+		humidity.innerHTML = `${data.main.humidity}%`;
+		pressure.innerHTML = `${data.main.pressure}hPa`;
 		sunrise.innerHTML = `${new Date(data.sys.sunrise*1000).toLocaleTimeString()}`;
 		sunset.innerHTML = `${new Date(data.sys.sunset*1000).toLocaleTimeString()}`;
 
@@ -82,7 +82,18 @@ let get = () =>{
 				if(Number.isInteger(t) === true)
 					t += ".0";
 				
-				create(getDay(now.getDay()), day+ '.' + month, data.daily[i].weather[0].icon[0] + data.daily[i].weather[0].icon[1], t, msg.charAt(0).toUpperCase() + msg.slice(1), data.daily[i].pressure, data.daily[i].humidity, new Date(data.daily[i].sunrise * 1000).toLocaleTimeString(), Math.round((data.daily[i].feels_like.day - 273.15) * 10) / 10, Math.round(data.daily[i].wind_speed * 3.6 * 100) / 100, new Date(data.daily[i].sunset * 1000).toLocaleTimeString());}
+				create(
+					getDay(now.getDay()),
+					day+ '.' + month,
+					data.daily[i].weather[0].icon[0] + data.daily[i].weather[0].icon[1],
+					t,
+					msg.charAt(0).toUpperCase() + msg.slice(1), data.daily[i].pressure,
+					data.daily[i].humidity,
+					new Date(data.daily[i].sunrise * 1000).toLocaleTimeString(),
+					Math.round((data.daily[i].feels_like.day - 273.15) * 10) / 10,
+					Math.round(data.daily[i].wind_speed * 3.6 * 100) / 100,
+					new Date(data.daily[i].sunset * 1000).toLocaleTimeString()
+				);}
 		})
 
 		.catch(error => alert(`Something went wrong`));
@@ -184,7 +195,7 @@ let create = (day, date, icon, temp, description, press, hum, rise, feels, wind,
 	const divTemp = document.createElement("div");
 	const nextTemperature = document.createElement("div");
 	nextTemperature.classList.add("temperature");
-	nextTemperature.innerHTML = temp +" °C";
+	nextTemperature.innerHTML = temp +"°C";
 
 	const nextDescription = document.createElement("div");
 	nextDescription.classList.add("description");
@@ -197,8 +208,8 @@ let create = (day, date, icon, temp, description, press, hum, rise, feels, wind,
 
 
 	const nextDivDetails = document.createElement("div");
-	nextDivDetails.classList.add("m-top10");
-	nextDivDetails.classList.add("m-right10");
+	// nextDivDetails.classList.add("m-top10");
+	// nextDivDetails.classList.add("m-right10");
 	nextDivDetails.classList.add("next-details");
 
 	const nextDetails1 = document.createElement("div");
@@ -209,14 +220,14 @@ let create = (day, date, icon, temp, description, press, hum, rise, feels, wind,
 	let tempP = document.createElement("div");
 	const nextPressure = document.createElement("div");
 	nextPressure.innerHTML = "PRESSURE";
-	tempP.innerHTML = press+" hPa";
+	tempP.innerHTML = press+"hPa";
 	nextPressure.append(tempP);
 	nextDetails1.append(nextPressure);
 
 	let tempH = document.createElement("div");
 	const nextHumidity = document.createElement("div");
 	nextHumidity.innerHTML = "HUMIDITY";
-	tempH.innerHTML = hum+" %";
+	tempH.innerHTML = hum+"%";
 	nextHumidity.append(tempH);
 	nextDetails1.append(nextHumidity);
 
@@ -236,14 +247,14 @@ let create = (day, date, icon, temp, description, press, hum, rise, feels, wind,
 	let tempF = document.createElement("div");
 	const nextFeelsLike = document.createElement("div");
 	nextFeelsLike.innerHTML = "FEELS LIKE";
-	tempF.innerHTML = feels+" °C";
+	tempF.innerHTML = feels+"°C";
 	nextFeelsLike.append(tempF);
 	nextDetails2.append(nextFeelsLike);
 
 	let tempW = document.createElement("div");
 	const nextWind = document.createElement("div");
 	nextWind.innerHTML = "WIND";
-	tempW.innerHTML = wind+" km/h";
+	tempW.innerHTML = wind+"km/h";
 	nextWind.append(tempW);
 	nextDetails2.append(nextWind);
 
