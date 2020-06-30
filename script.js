@@ -61,10 +61,10 @@ let get = () =>{
 		.then(data => {
 			let now = new Date();
 				
-			now.setDate(now.getDate() + 8);
+			now.setDate(now.getDate() );
 			console.log(data);
-			for(let i=7; i>=1; i--){
-				now.setDate(now.getDate() -1);
+			for(let i=0; i<=7; i++){
+				now.setDate(now.getDate() + 1);
 
 				let msg = data.daily[i].weather[0].description;
 				
@@ -272,6 +272,6 @@ let create = (day, date, icon, temp, description, press, hum, rise, feels, wind,
 
 
 	let div = document.querySelector("main"); //do tego elementu wstawię nowy element
-	div.after(sekcja);
+	div.append(sekcja);
 }
 

@@ -33,7 +33,7 @@ input, #submit{
 input{
 	padding:0 10px;
 	width:280px;
-	    background-color: #DADADA;
+	background-color: #DADADA;
 	/* background-color: rgba(240, 240, 241, 0.4); */
 	/* background: rgba(240, 240, 241, 0.4); */
 	color: black;
@@ -47,6 +47,10 @@ input{
 	background: rgba(30, 77, 130, 0.8);	
 	color: white;
 	cursor: pointer;
+}
+
+main{
+	padding-bottom: 50px;
 }
 
 #frame{
@@ -103,14 +107,14 @@ input{
 	margin-top:10px;
 }
 
-.details div{
+.details > div{
 	font-weight: 400;
 	font-size:13px;
 	width:80px;
 	text-align: center;
 }
 
-.details div div{
+.details > div > div{
 	font-size:14px;
 	margin-top:2px;
 	font-weight: 700;
@@ -175,7 +179,24 @@ input{
 	margin-top: 10px;
 }
 
+footer{
+	color:rgb(218, 218, 218);
+	width:100vw;
+	background-color: rgb(32, 32, 32);
+	text-align: center;
+	padding:10px 0;
+	position: fixed;
+	bottom:0;
+}
 
+a{
+	color:rgb(218, 218, 218);
+	text-decoration: none;
+}
+
+a:hover{
+	color:grey;
+}
 
 /* ATOMIC CLASSES */
 .flex{
@@ -217,19 +238,19 @@ input{
 	
 
 	.next-days{
-		width:98%;
+		width:96%;
 		
 	}
 
 	#frame{
-		width:98%;
+		width:96%;
 	}
 }
 
 @media (max-width: 650px){
 	
 	.form{
-		width:98%;
+		width:80%;
 	}
 
 	input{
@@ -238,6 +259,7 @@ input{
 
 	#submit{
 		width:20%;
+		min-width: 55px;
 	}
 	
 	#frame{
@@ -270,8 +292,7 @@ input{
 	}
 
 	.day{
-		font-size:14px;   
-		/* 7/10 */
+		font-size:14px;  
 		padding-top:16px;
 	}
 
@@ -298,12 +319,12 @@ input{
 		margin-top:0;
 	}
 
-	.next-details .details div{
+	.next-details > .details div{
 		font-size:9px;
 		width:50px;
 	}
 
-	.next-details .details div div{
+	.next-details > .details > div > div{
 		font-size:10px;
 		margin-top:2px;
 	}
@@ -347,5 +368,9 @@ input{
 
 	.description{
 		font-size:14px;
+	}
+
+	footer{
+		font-size:12px;
 	}
 }
