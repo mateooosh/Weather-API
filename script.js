@@ -63,7 +63,7 @@ let get = () =>{
 				
 			now.setDate(now.getDate() );
 			console.log(data);
-			for(let i=0; i<=7; i++){
+			for(let i=1; i<=7; i++){
 				now.setDate(now.getDate() + 1);
 
 				let msg = data.daily[i].weather[0].description;
@@ -93,9 +93,11 @@ let get = () =>{
 					Math.round((data.daily[i].feels_like.day - 273.15) * 10) / 10,
 					Math.round(data.daily[i].wind_speed * 3.6 * 100) / 100,
 					new Date(data.daily[i].sunset * 1000).toLocaleTimeString()
-				);}
-		})
+				);
+			}
+			
 
+		})
 		.catch(error => alert(`Something went wrong`));
 	})
 	.catch(error => alert(`Wrong city name`));
