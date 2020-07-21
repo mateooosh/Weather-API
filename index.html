@@ -3,7 +3,7 @@
  	<head>
     	<meta charset="utf-8" />
     	<title>Weather</title>
-    	<link rel="stylesheet" href="style.css" type="text/css"/>
+    	<link rel="stylesheet" href="css/style.css" type="text/css"/>
     	<link rel="stylesheet" href="css/fontello.css" type="text/css"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- Font -->
@@ -14,7 +14,6 @@
 
 	<body>
 	    <main>
-			
 			<section class="form">
 				<input type="text" id="enteredCity" placeholder="Location">
 				<button id="submit"><i class="icon-search"></i></button>
@@ -27,96 +26,45 @@
 					</div>
 
 					<div>
-						<div id="temperature">20.9°C</div>
-						<div id="place">Kielce, PL</div>
+						<div id="temperature"></div>
+						<div id="place"></div>
 					</div>
-
 
 					<div>
 						<div id="description">Overcast clouds</div>
 						<div class="flex space-between details">
 							<div>
 								PRESSURE
-								<div id="pressure">1001 hPa</div>
+								<div id="pressure"></div>
 							</div>
 							<div>
 								HUMIDITY
-								<div id="humidity">51 %</div>
+								<div id="humidity"></div>
 
 							</div>
 							<div>
 								SUNRISE
-								<div id="sunrise">5:59:15</div>
+								<div id="sunrise"></div>
 							</div>
 						</div>
 
 						<div class="flex space-between details">
 							<div>
 								FEELS LIKE
-								<div id="feelsLike">13°C</div>
+								<div id="feelsLike"></div>
 							</div>
 							<div>
 								WIND
-								<div id="wind">11 km/h</div>
+								<div id="wind"></div>
 							</div>
 							<div>
 								SUNSET
-								<div id="sunset">21:31:20</div>
+								<div id="sunset"></div>
 							</div>
 						</div>
 					</div>
 				</section>
 			</section>
-
-			<!-- <section class="next-days flex space-between">
-				<div class="which-day">
-					<div class="day">Friday</div>
-					<div class="date">29.05</div>
-				</div>
-
-				<div>
-					<embed class="embed" src="icons/10.svg" height="80" type="image/svg+xml" />
-				</div>
-				
-				<div>
-					<div class="temperature" >20.9°C</div>
-					<div class="description">Overcast clouds</div>
-					
-				</div>
-
-				<div class="m-top10 next-details">
-					<div class="flex space-between details">
-						<div>
-							PRESSURE
-							<div>1001 hPa</div>
-						</div>
-						<div>
-							HUMIDITY
-							<div>51 %</div>
-				
-						</div>
-						<div>
-							SUNRISE
-							<div>5:59:15</div>
-						</div>
-					</div>
-				
-					<div class="flex space-between details">
-						<div>
-							FEELS LIKE
-							<div>13°C</div>
-						</div>
-						<div>
-							WIND
-							<div>11 km/h</div>
-						</div>
-						<div>
-							SUNSET
-							<div>21:31:20</div>
-						</div>
-					</div>
-				</div>
-			</section> -->
 
 		</main>
 
@@ -125,7 +73,7 @@
 			<a href="#"> Mateusz Bujak SA</a>
 		</footer>
 
-		<script src="script.js"></script>
+		<script src="js/script.js"></script>
 	</body>
 
 </html>

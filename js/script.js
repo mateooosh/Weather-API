@@ -273,7 +273,7 @@ let create = (day, date, icon, temp, description, press, hum, rise, feels, wind,
 	sekcja.append(nextDivDetails);
 
 
-	let div = document.querySelector("main"); //do tego elementu wstawię nowy element
+	let div = document.querySelector("main"); 
 	div.append(sekcja);
 }
 
