@@ -1,6 +1,6 @@
 
 # Weather-API
-Weather Forecast that makes use of the OpenWeatherMap service for fetching and displaying weather data and forecasts based on a given location.
+Weather Forecast that makes use of the OpenWeatherMap service for fetching and displaying weather data and forecasts based on a given location. App can be installed as PWA.
 
 ## Technologies
  Project is created with:
@@ -10,7 +10,7 @@ Weather Forecast that makes use of the OpenWeatherMap service for fetching and d
 * JavaScript, AJAX
 
 ## Demo
-Here is a working live demo: [Weather-API](https://weather-forecast-api.netlify.app/)
+Here is a working live demo: [Weather-API](https://mateooosh.github.io/Weather-API/)
 
 
 <br/>
