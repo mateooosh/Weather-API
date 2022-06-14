@@ -30,6 +30,7 @@ import TodayFrame from './components/TodayFrame'
 import NextDays from './components/NextDays'
 import Footer from './components/Footer'
 import {DAYS} from '../common/DAYS'
+import _ from 'lodash'
 
 export default {
   name: 'App',
@@ -66,7 +67,7 @@ export default {
             this.icon = response.weather[0].icon[0] + response.weather[0].icon[1]
             this.todayFrameIsVisible = true
 
-            fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.data.coord.lat}&lon=${this.data.coord.lon}&appid=ebbf5f1d676d479b2fc1eb8dd318add2`)
+            fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.data.coord.lat}&lon=${this.data.coord.lon}&appid=${this.appId}`)
                 .then(response => response.json())
                 .then(response => {
                   this.nextDays = response
@@ -78,11 +79,10 @@ export default {
                     this.nextDays.daily[i].date = `${day.getDate() > 9 ? day.getDate() : '0' + day.getDate()}.${day.getMonth() + 1 > 9 ? day.getMonth() + 1 : '0' + (day.getMonth() + 1)}`
                   }
 
-
                   this.gotNextDaysData = true
                   this.fixedFooter = false
                 })
-                .catch(error => alert(`Something went wrong`, error))
+                .catch(error => alert(`Something went wrong`))
           })
           .catch(error => alert(error))
     }

@@ -75,7 +75,7 @@ import Icon10 from './Icon10.vue'
 import Icon11 from './Icon11.vue'
 import Icon13 from './Icon13.vue'
 import Icon50 from './Icon50.vue'
-import {DAYS} from "../../common/DAYS";
+import {DAYS} from '../../common/DAYS'
 
 export default {
   name: 'TodayFrame',
