@@ -7,32 +7,39 @@
       <div v-for="(item, index) in dailyNextDays" :key="index">
         <NextDays :day="item.day"
                   :date="item.date"
-                  :icon="item.weather[0].icon[0]+item.weather[0].icon[1]"
-                  :temperature="Math.round((item.temp.day - 273.15)*10)/10"
-                  :description="item.weather[0].description.charAt(0).toUpperCase() + item.weather[0].description.slice(1)"
+                  :icon="item.icon"
+                  :temperature="item.temperature"
+                  :description="item.description"
                   :pressure="item.pressure"
                   :humidity="item.humidity"
-                  :sunrise="new Date(item.sunrise*1000).toLocaleTimeString()"
-                  :feels_like="Math.round((item.feels_like.day - 273.15)*10)/10"
-                  :wind="Math.round(item.wind_speed*3.6*100)/100"
-                  :sunset="new Date(item.sunset*1000).toLocaleTimeString()"
+                  :sunrise="item.sunrise"
+                  :feels_like="item.feels_like"
+                  :wind="item.wind"
+                  :sunset="item.sunset"
         />
       </div>
     </section>
   </div>
 </template>
 
-<script>
-import Input from './components/Input'
-import TodayFrame from './components/TodayFrame'
-import NextDays from './components/NextDays'
+<script lang="ts">
+import {defineComponent} from 'vue'
+import Input from './components/Input.vue'
+import TodayFrame from './components/TodayFrame.vue'
+import NextDays from './components/NextDays.vue'
 import {DAYS} from '../common/DAYS'
 import _ from 'lodash'
 import {getActualWeatherForPlace, getNextDays} from '@/components/weather/weather.api'
 import {getIcon} from '@/common/utils'
+import {DailyWeatherModel} from '@/models/DailyWeatherModel'
 
-export default {
+export default defineComponent({
   name: 'App',
+  components: {
+    Input,
+    TodayFrame,
+    NextDays
+  },
   data() {
     return {
       city: '',
@@ -44,18 +51,11 @@ export default {
       appId: 'ebbf5f1d676d479b2fc1eb8dd318add2'
     }
   },
-  components: {
-    Input,
-    TodayFrame,
-    NextDays
-  },
-
   computed: {
     dailyNextDays() {
       return _.slice(this.nextDays?.daily, 1, this.nextDays?.daily?.length)
     }
   },
-
   methods: {
     getNameOfDay(date) {
       return DAYS[date.getDay()]
@@ -79,26 +79,22 @@ export default {
       if (error) {
         alert(error)
       } else {
-        this.nextDays = data
-        let day = new Date()
 
-        for (let i = 1; i < 8; i++) {
-          day.setDate(day.getDate() + 1)
-          this.nextDays.daily[i].day = this.getNameOfDay(day)
-          this.nextDays.daily[i].date = `${day.getDate() > 9 ? day.getDate() : '0' + day.getDate()}.${day.getMonth() + 1 > 9 ? day.getMonth() + 1 : '0' + (day.getMonth() + 1)}`
-        }
+
+        this.nextDays = DailyWeatherModel.fromJson(data)
+
+
+
+        // for (let i = 1; i < 8; i++) {
+        //   day.setDate(day.getDate() + 1)
+        //   this.nextDays.daily[i].day = this.getNameOfDay(day)
+        //   this.nextDays.daily[i].date = `${day.getDate() > 9 ? day.getDate() : '0' + day.getDate()}.${day.getMonth() + 1 > 9 ? day.getMonth() + 1 : '0' + (day.getMonth() + 1)}`
+        // }
         this.showNextDaysFrames = true
       }
-
-      // await fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${this.data.coord.lat}&lon=${this.data.coord.lon}&appid=${this.appId}`)
-      //   .then(response => response.json())
-      //   .then(response => {
-      //     console.log(response)
-      //   })
-      //   .catch(() => alert(`Something went wrong`))
     }
   }
-}
+})
 </script>
 
 <style scoped lang="scss">

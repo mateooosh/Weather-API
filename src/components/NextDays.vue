@@ -1,6 +1,6 @@
 <template>
   <section class="nextdays">
-    <div class="nextdays__info" :class="{weekend: (day=='Saturday' || day=='Sunday')}">
+    <div class="nextdays__info" :class="{weekend: isWeekend(day)}">
       <div class="nextdays__day">{{ day }}</div>
       <div class="nextdays__date">{{ date }}</div>
     </div>
@@ -81,7 +81,7 @@ export default {
   name: 'NextDays',
 
   components: {
-    Icon01, Icon02, Icon03, Icon04, Icon09, Icon10, Icon11, Icon13, Icon50,
+    Icon01, Icon02, Icon03, Icon04, Icon09, Icon10, Icon11, Icon13, Icon50
   },
 
   props: {
@@ -96,6 +96,12 @@ export default {
     feels_like: Number,
     wind: Number,
     sunset: String
+  },
+
+  methods: {
+    isWeekend(day) {
+      return day === 'Saturday' || day === 'Sunday'
+    }
   }
 }
 </script>
