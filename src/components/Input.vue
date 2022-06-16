@@ -22,28 +22,29 @@ export default {
   margin: 40px auto;
   display: flex;
   justify-content: space-between;
+  gap: 16px;
 
   &__input {
     width: 200px;
-    margin-right: 10px;
-    padding: 6px 10px;
+    padding: 8px 10px;
     font-size: 20px;
-    border-radius: 4px;
+    border-radius: 8px;
     border: none;
   }
 
   &__button {
-    background-color: #385179;
+    background-color: #21518c;
     color: rgb(233, 233, 233);
     border: none;
-    border-radius: 4px;
-    padding: 6px 12px;
+    border-radius: 8px;
+    padding: 8px 24px;
     font-size: 20px;
     cursor: pointer;
 
     &:hover {
       color: rgb(233, 233, 233);
       background-color: #42597e;
+      transition: all .3s;
     }
   }
 }

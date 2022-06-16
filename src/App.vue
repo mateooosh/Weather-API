@@ -1,12 +1,11 @@
 <template>
-  <div id="app">
+  <div class="container">
     <Input v-on:search="getData"/>
-    <TodayFrame v-if="todayFrameIsVisible" :data="data" :icon="icon"/>
+    <TodayFrame v-if="showTodayFrame" :data="data" :icon="icon"/>
 
-    <section class="next-days" v-if="gotNextDaysData">
-      <div v-for="(item, index) in nextDays.daily" :key="index">
-        <NextDays v-if="index!==0"
-                  :day="item.day"
+    <section class="next-days" v-if="showNextDaysFrames">
+      <div v-for="(item, index) in dailyNextDays" :key="index">
+        <NextDays :day="item.day"
                   :date="item.date"
                   :icon="item.weather[0].icon[0]+item.weather[0].icon[1]"
                   :temperature="Math.round((item.temp.day - 273.15)*10)/10"
@@ -20,7 +19,6 @@
         />
       </div>
     </section>
-    <!--    <Footer :fixed="fixedFooter"/>-->
   </div>
 </template>
 
@@ -28,29 +26,34 @@
 import Input from './components/Input'
 import TodayFrame from './components/TodayFrame'
 import NextDays from './components/NextDays'
-import Footer from './components/Footer'
 import {DAYS} from '../common/DAYS'
 import _ from 'lodash'
+import {getActualWeatherForPlace, getNextDays} from '@/components/weather/weather.api'
+import {getIcon} from '@/common/utils'
 
 export default {
   name: 'App',
   data() {
     return {
       city: '',
-      todayFrameIsVisible: false,
-      gotNextDaysData: false,
+      showTodayFrame: false,
+      showNextDaysFrames: false,
       icon: '',
       data: Object,
       nextDays: Object,
-      fixedFooter: true,
       appId: 'ebbf5f1d676d479b2fc1eb8dd318add2'
     }
   },
   components: {
     Input,
     TodayFrame,
-    NextDays,
-    Footer
+    NextDays
+  },
+
+  computed: {
+    dailyNextDays() {
+      return _.slice(this.nextDays?.daily, 1, this.nextDays?.daily?.length)
+    }
   },
 
   methods: {
@@ -58,50 +61,50 @@ export default {
       return DAYS[date.getDay()]
     },
 
-    getData(value) {
-      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=${this.appId}`)
-          .then(response => response.json())
-          .then(response => {
+    async getData(value) {
+      this.showTodayFrame = false
+      this.showNextDaysFrames = false
 
-            this.data = response
-            this.icon = response.weather[0].icon[0] + response.weather[0].icon[1]
-            this.todayFrameIsVisible = true
+      let [error, data] = await getActualWeatherForPlace(value)
 
-            fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.data.coord.lat}&lon=${this.data.coord.lon}&appid=${this.appId}`)
-                .then(response => response.json())
-                .then(response => {
-                  this.nextDays = response
-                  let day = new Date()
+      if (error) {
+        alert(error)
+      } else {
+        this.data = data
+        this.icon = getIcon(data.weather[0].icon)
+        this.showTodayFrame = true
+      }
 
-                  for (let i = 1; i < 8; i++) {
-                    day.setDate(day.getDate() + 1)
-                    this.nextDays.daily[i].day = this.getNameOfDay(day)
-                    this.nextDays.daily[i].date = `${day.getDate() > 9 ? day.getDate() : '0' + day.getDate()}.${day.getMonth() + 1 > 9 ? day.getMonth() + 1 : '0' + (day.getMonth() + 1)}`
-                  }
+      [error, data] = await getNextDays(this.data.coord.lat, this.data.coord.lon)
+      if (error) {
+        alert(error)
+      } else {
+        this.nextDays = data
+        let day = new Date()
 
-                  this.gotNextDaysData = true
-                  this.fixedFooter = false
-                })
-                .catch(error => alert(`Something went wrong`))
-          })
-          .catch(error => alert(error))
+        for (let i = 1; i < 8; i++) {
+          day.setDate(day.getDate() + 1)
+          this.nextDays.daily[i].day = this.getNameOfDay(day)
+          this.nextDays.daily[i].date = `${day.getDate() > 9 ? day.getDate() : '0' + day.getDate()}.${day.getMonth() + 1 > 9 ? day.getMonth() + 1 : '0' + (day.getMonth() + 1)}`
+        }
+        this.showNextDaysFrames = true
+      }
+
+      // await fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${this.data.coord.lat}&lon=${this.data.coord.lon}&appid=${this.appId}`)
+      //   .then(response => response.json())
+      //   .then(response => {
+      //     console.log(response)
+      //   })
+      //   .catch(() => alert(`Something went wrong`))
     }
-  },
+  }
 }
 </script>
 
-<style lang="scss">
-* {
-  margin: 0;
-  font-size: 18px;
-  box-sizing: border-box;
-  font-family: 'Lato', sans-serif;
-}
-
-body {
-  // background-color: rgb(126, 126, 126);
-  background: url('./assets/background.jpg') no-repeat center center fixed;
-  background-size: cover;
+<style scoped lang="scss">
+.container {
+  display: flex;
+  flex-direction: column;
 }
 
 .next-days {
