@@ -1,67 +1,63 @@
 <template>
   <section class="today">
-    <div class="today__date">{{ date }}</div>
+    <div class="today__date">{{ dataSource.date }}</div>
     <div class="today__content">
       <div class="today__icon">
-        <Icon01 v-if="icon=='01'"/>
-        <Icon02 v-if="icon=='02'"/>
-        <Icon03 v-if="icon=='03'"/>
-        <Icon04 v-if="icon=='04'"/>
-        <Icon09 v-if="icon=='09'"/>
-        <Icon10 v-if="icon=='10'"/>
-        <Icon11 v-if="icon=='11'"/>
-        <Icon13 v-if="icon=='13'"/>
-        <Icon50 v-if="icon=='50'"/>
+        <Icon01 v-if="dataSource.icon==='01'"/>
+        <Icon02 v-if="dataSource.icon==='02'"/>
+        <Icon03 v-if="dataSource.icon==='03'"/>
+        <Icon04 v-if="dataSource.icon==='04'"/>
+        <Icon09 v-if="dataSource.icon==='09'"/>
+        <Icon10 v-if="dataSource.icon==='10'"/>
+        <Icon11 v-if="dataSource.icon==='11'"/>
+        <Icon13 v-if="dataSource.icon==='13'"/>
+        <Icon50 v-if="dataSource.icon==='50'"/>
       </div>
 
       <div class="today__main">
-        <div class="today__main-temperature">{{ Math.round((data.main.temp - 273.15) * 10) / 10 }}°C</div>
-        <div class="today__main-place">{{ data.name }}, {{ data.sys.country }}</div>
+        <div class="today__main-temperature">{{ dataSource.temperature }}°C</div>
+        <div class="today__main-place">{{ dataSource.place }}, {{ dataSource.country }}</div>
       </div>
 
       <div class="today__details">
         <div class="today__details-description">
-          {{ data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1) }}
+          {{ dataSource.description }}
         </div>
         <div class="today__details-row">
           <div class="today__details-title">
             PRESSURE
-            <div class="today__details-value">{{ data.main.pressure }}hPa</div>
+            <div class="today__details-value">{{ dataSource.pressure }}hPa</div>
           </div>
 
           <div class="today__details-title">
             HUMIDITY
-            <div class="today__details-value">{{ data.main.humidity }}%</div>
+            <div class="today__details-value">{{ dataSource.humidity }}%</div>
           </div>
 
           <div class="today__details-title">
             SUNRISE
-            <div class="today__details-value">{{ new Date(data.sys.sunrise * 1000).toLocaleTimeString() }}</div>
+            <div class="today__details-value">{{ dataSource.sunrise }}</div>
           </div>
         </div>
 
         <div class="today__details-row">
           <div class="today__details-title">
             FEELS LIKE
-            <div class="today__details-value">{{ Math.round((data.main.feels_like - 273.15) * 10) / 10 }}°C</div>
+            <div class="today__details-value">{{ dataSource.feels_like }}°C</div>
           </div>
 
           <div class="today__details-title">
             WIND
-            <div class="today__details-value">{{ Math.round(data.wind.speed * 3.6 * 100) / 100 }}km/h</div>
+            <div class="today__details-value">{{ dataSource.wind }}km/h</div>
           </div>
 
           <div class="today__details-title">
             SUNSET
-            <div class="today__details-value">{{ new Date(data.sys.sunset * 1000).toLocaleTimeString() }}</div>
+            <div class="today__details-value">{{ dataSource.sunset }}</div>
           </div>
         </div>
       </div>
-
-
     </div>
-
-
   </section>
 </template>
 
@@ -75,42 +71,22 @@ import Icon10 from './Icon10.vue'
 import Icon11 from './Icon11.vue'
 import Icon13 from './Icon13.vue'
 import Icon50 from './Icon50.vue'
-import {DAYS} from '../../common/DAYS'
+import {TodayWeatherModel} from '@/models/TodayWeatherModel'
 
 export default {
   name: 'TodayFrame',
   components: {
     Icon01, Icon02, Icon03, Icon04, Icon09, Icon10, Icon11, Icon13, Icon50,
   },
-  data() {
-    return {
-      date: '',
-    }
-  },
 
   props: {
-    data: Object,
-    icon: String,
-  },
-
-  methods: {
-    getDate() {
-      let now = new Date()
-      let day = DAYS[now.getDay()]
-
-      this.date = day + ', ' + ((now.getDate() > 9) ? now.getDate() : '0' + now.getDate()) + '.' +
-          ((now.getMonth() + 1) > 9 ? now.getMonth() + 1 : '0' + (now.getMonth() + 1)) + '.' + now.getFullYear()
-    }
-  },
-
-  mounted() {
-    this.getDate()
+    dataSource: TodayWeatherModel
   }
 }
 </script>
 <style scoped lang="scss">
 .today {
-  background-color: rgba(56, 81, 121);
+  background-color: #21518c;
   width: 760px;
   padding: 0px 10px;
   margin: auto;

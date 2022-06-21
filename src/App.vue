@@ -1,24 +1,15 @@
 <template>
   <div class="container">
     <Input v-on:search="getData"/>
-    <TodayFrame v-if="showTodayFrame" :data="data" :icon="icon"/>
+    <Transition>
+      <TodayFrame v-if="showTodayFrame" :data-source="todayWeather"/>
+    </Transition>
 
-    <section class="next-days" v-if="showNextDaysFrames">
-      <div v-for="(item, index) in dailyNextDays" :key="index">
-        <NextDays :day="item.day"
-                  :date="item.date"
-                  :icon="item.icon"
-                  :temperature="item.temperature"
-                  :description="item.description"
-                  :pressure="item.pressure"
-                  :humidity="item.humidity"
-                  :sunrise="item.sunrise"
-                  :feels_like="item.feels_like"
-                  :wind="item.wind"
-                  :sunset="item.sunset"
-        />
-      </div>
-    </section>
+    <Transition>
+      <section class="next-days" v-if="showNextDaysFrames">
+        <NextDays v-for="(item, index) in dailyNextDays" :key="index" :data-source="item"/>
+      </section>
+    </Transition>
   </div>
 </template>
 
@@ -30,8 +21,9 @@ import NextDays from './components/NextDays.vue'
 import {DAYS} from '../common/DAYS'
 import _ from 'lodash'
 import {getActualWeatherForPlace, getNextDays} from '@/components/weather/weather.api'
-import {getIcon} from '@/common/utils'
 import {DailyWeatherModel} from '@/models/DailyWeatherModel'
+import {TodayWeatherModel} from "@/models/TodayWeatherModel";
+import {firstLetterToUppercase} from "@/common/utils";
 
 export default defineComponent({
   name: 'App',
@@ -42,13 +34,11 @@ export default defineComponent({
   },
   data() {
     return {
-      city: '',
       showTodayFrame: false,
       showNextDaysFrames: false,
-      icon: '',
-      data: Object,
-      nextDays: Object,
-      appId: 'ebbf5f1d676d479b2fc1eb8dd318add2'
+      todayWeather: TodayWeatherModel,
+      nextDays: DailyWeatherModel,
+      show: false
     }
   },
   computed: {
@@ -57,10 +47,6 @@ export default defineComponent({
     }
   },
   methods: {
-    getNameOfDay(date) {
-      return DAYS[date.getDay()]
-    },
-
     async getData(value) {
       this.showTodayFrame = false
       this.showNextDaysFrames = false
@@ -68,28 +54,18 @@ export default defineComponent({
       let [error, data] = await getActualWeatherForPlace(value)
 
       if (error) {
-        alert(error)
+        this.$toast.error(firstLetterToUppercase(error.response.data.message))
+        return
       } else {
-        this.data = data
-        this.icon = getIcon(data.weather[0].icon)
+        this.todayWeather = TodayWeatherModel.fromJson(data)
         this.showTodayFrame = true
       }
 
-      [error, data] = await getNextDays(this.data.coord.lat, this.data.coord.lon)
+      [error, data] = await getNextDays(this.todayWeather.lat, this.todayWeather.lon)
       if (error) {
-        alert(error)
+        this.$toast.error(firstLetterToUppercase(error.response.data.message))
       } else {
-
-
         this.nextDays = DailyWeatherModel.fromJson(data)
-
-
-
-        // for (let i = 1; i < 8; i++) {
-        //   day.setDate(day.getDate() + 1)
-        //   this.nextDays.daily[i].day = this.getNameOfDay(day)
-        //   this.nextDays.daily[i].date = `${day.getDate() > 9 ? day.getDate() : '0' + day.getDate()}.${day.getMonth() + 1 > 9 ? day.getMonth() + 1 : '0' + (day.getMonth() + 1)}`
-        // }
         this.showNextDaysFrames = true
       }
     }
@@ -105,5 +81,20 @@ export default defineComponent({
 
 .next-days {
   margin-bottom: 20px;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: all .5s ease;
+  transform: translateY(0px);
+}
+
+.v-enter-from{
+  transform: translateY(50px);
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

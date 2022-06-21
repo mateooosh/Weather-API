@@ -1,4 +1,4 @@
-import {getIcon} from '@/common/utils'
+import {firstLetterToUppercase, getIcon} from '@/common/utils'
 
 export class NextDayModel {
   day: string
@@ -13,14 +13,14 @@ export class NextDayModel {
   wind: number
   icon: string
 
-  static fromJSON(json: any) {
+  static fromJson(json: any) {
     const result = new NextDayModel()
 
     result.day = json.day || null
     result.date = json.date || null
     result.icon = getIcon(json.weather[0].icon || null)
     result.temperature = Math.round((json.temp.day - 273.15) * 10) / 10
-    result.description = json.weather[0].description.charAt(0).toUpperCase() + json.weather[0].description.slice(1)
+    result.description = firstLetterToUppercase(json.weather[0].description)
     result.pressure = json.pressure
     result.humidity = json.humidity
     result.sunrise = new Date(json.sunrise * 1000).toLocaleTimeString()
@@ -30,5 +30,4 @@ export class NextDayModel {
 
     return result
   }
-
 }

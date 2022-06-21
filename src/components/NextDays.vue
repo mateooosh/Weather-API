@@ -1,29 +1,29 @@
 <template>
   <section class="nextdays">
-    <div class="nextdays__info" :class="{weekend: isWeekend(day)}">
-      <div class="nextdays__day">{{ day }}</div>
-      <div class="nextdays__date">{{ date }}</div>
+    <div class="nextdays__info" :class="{weekend: isWeekend(dataSource.day)}">
+      <div class="nextdays__day">{{ dataSource.day }}</div>
+      <div class="nextdays__date">{{ dataSource.date }}</div>
     </div>
 
     <div class="nextdays__icon">
-      <Icon01 v-if="icon=='01'"/>
-      <Icon02 v-if="icon=='02'"/>
-      <Icon03 v-if="icon=='03'"/>
-      <Icon04 v-if="icon=='04'"/>
-      <Icon09 v-if="icon=='09'"/>
-      <Icon10 v-if="icon=='10'"/>
-      <Icon11 v-if="icon=='11'"/>
-      <Icon13 v-if="icon=='13'"/>
-      <Icon50 v-if="icon=='50'"/>
+      <Icon01 v-if="dataSource.icon==='01'"/>
+      <Icon02 v-if="dataSource.icon==='02'"/>
+      <Icon03 v-if="dataSource.icon==='03'"/>
+      <Icon04 v-if="dataSource.icon==='04'"/>
+      <Icon09 v-if="dataSource.icon==='09'"/>
+      <Icon10 v-if="dataSource.icon==='10'"/>
+      <Icon11 v-if="dataSource.icon==='11'"/>
+      <Icon13 v-if="dataSource.icon==='13'"/>
+      <Icon50 v-if="dataSource.icon==='50'"/>
     </div>
 
     <div class="nextdays__main">
       <div class="nextdays__temperature">
-        {{ temperature }}°C
+        {{ dataSource.temperature }}°C
       </div>
 
       <div class="nextdays__description">
-        {{ description }}
+        {{ dataSource.description }}
       </div>
     </div>
 
@@ -31,17 +31,17 @@
       <div class="nextdays__details-row">
         <div class="nextdays__details-title">
           PRESSURE
-          <div class="nextdays__details-value">{{ pressure }}hPa</div>
+          <div class="nextdays__details-value">{{ dataSource.pressure }}hPa</div>
         </div>
 
         <div class="nextdays__details-title">
           HUMIDITY
-          <div class="nextdays__details-value">{{ humidity }}%</div>
+          <div class="nextdays__details-value">{{ dataSource.humidity }}%</div>
         </div>
 
         <div class="nextdays__details-title">
           SUNRISE
-          <div class="nextdays__details-value">{{ sunrise }}</div>
+          <div class="nextdays__details-value">{{ dataSource.sunrise }}</div>
         </div>
       </div>
 
@@ -49,17 +49,17 @@
       <div class="nextdays__details-row">
         <div class="nextdays__details-title">
           FEELS LIKE
-          <div class="nextdays__details-value">{{ feels_like }}°C</div>
+          <div class="nextdays__details-value">{{ dataSource.feels_like }}°C</div>
         </div>
 
         <div class="nextdays__details-title">
           WIND
-          <div class="nextdays__details-value">{{ wind }}km/h</div>
+          <div class="nextdays__details-value">{{ dataSource.wind }}km/h</div>
         </div>
 
         <div class="nextdays__details-title">
           SUNSET
-          <div class="nextdays__details-value">{{ sunset }}</div>
+          <div class="nextdays__details-value">{{ dataSource.sunset }}</div>
         </div>
       </div>
     </div>
@@ -76,6 +76,7 @@ import Icon10 from './Icon10.vue'
 import Icon11 from './Icon11.vue'
 import Icon13 from './Icon13.vue'
 import Icon50 from './Icon50.vue'
+import {NextDayModel} from '@/models/NextDayModel'
 
 export default {
   name: 'NextDays',
@@ -85,17 +86,7 @@ export default {
   },
 
   props: {
-    day: String,
-    date: String,
-    icon: String,
-    temperature: Number,
-    description: String,
-    pressure: Number,
-    humidity: Number,
-    sunrise: String,
-    feels_like: Number,
-    wind: Number,
-    sunset: String
+    dataSource: NextDayModel
   },
 
   methods: {
@@ -120,7 +111,7 @@ export default {
 
   &__info {
     width: 120px;
-    background-color: rgba(56, 81, 121);
+    background-color: #21518c;
     height: 120px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;

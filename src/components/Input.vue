@@ -1,8 +1,10 @@
 <template>
-  <form class="form">
-    <input v-model="city" type="text" class="form__input" placeholder="Location">
-    <button @click.prevent="$emit('search', city)" class="form__button">Search</button>
-  </form>
+  <Transition>
+    <form class="form" v-if="showForm">
+      <input v-model="city" type="text" class="form__input" placeholder="Location">
+      <button @click.prevent="$emit('search', city)" class="form__button">Search</button>
+    </form>
+  </Transition>
 </template>
 
 <script>
@@ -10,8 +12,14 @@ export default {
   name: 'Input',
   data() {
     return {
-      city: ''
+      city: '',
+      showForm: false
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.showForm = true
+    }, 100)
   }
 }
 </script>
@@ -30,6 +38,11 @@ export default {
     font-size: 20px;
     border-radius: 8px;
     border: none;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
   }
 
   &__button {
@@ -40,14 +53,22 @@ export default {
     padding: 8px 24px;
     font-size: 20px;
     cursor: pointer;
-
-    &:hover {
-      color: rgb(233, 233, 233);
-      background-color: #42597e;
-      transition: all .3s;
-    }
   }
 }
 
+.v-enter-active,
+.v-leave-active {
+  transition: all .5s ease;
+  transform: translateY(0px);
+}
+
+.v-enter-from{
+  transform: translateY(50px);
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 
 </style>
