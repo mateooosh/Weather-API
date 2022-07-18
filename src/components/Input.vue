@@ -1,25 +1,93 @@
 <template>
   <Transition>
-    <form class="form" v-if="showForm">
-      <input v-model="city" type="text" class="form__input" placeholder="Location">
-      <button @click.prevent="$emit('search', city)" class="form__button">Search</button>
+    <form class="form" v-if="showForm" @submit.prevent="search">
+      <input v-model="value" ref="input" type="text" class="form__input" placeholder="Location">
+      <div class="form__buttons">
+        <div @click.prevent="getLocation" class="form__button form__button--location">
+          <map-marker-outline class="form__icon"/>
+        </div>
+        <div @click.prevent="search" class="form__button form__button--search">
+          <magnify class="form__icon"/>
+        </div>
+      </div>
+
     </form>
   </Transition>
 </template>
 
 <script>
+import {getPlaceByLocation} from '@/components/weather/weather.api'
+import { Magnify, MapMarkerOutline } from 'mdue'
+
 export default {
   name: 'Input',
+  components: {
+    Magnify,
+    MapMarkerOutline
+  },
+
   data() {
     return {
-      city: '',
-      showForm: false
+      value: '',
+      showForm: false,
+      lat: null,
+      lon: null,
+      searchIsLoading: false,
+      locationIsLoading: false
     }
   },
+
   mounted() {
     setTimeout(() => {
       this.showForm = true
     }, 100)
+  },
+
+  watch: {
+    value () {
+      this.emitValueChange()
+    }
+  },
+
+  methods: {
+    emitValueChange() {
+      this.$emit('value-change', this.value)
+    },
+
+    search () {
+      this.$emit('search', this.value)
+      this.$refs.input.blur()
+    },
+
+    async getLocation () {
+      this.locationIsLoading = true
+      await navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords
+        this.lat = latitude
+        this.lon = longitude
+
+        this.getPlace()
+        this.locationIsLoading = false
+      }, (error) => {
+        alert(error.message)
+        this.locationIsLoading = false
+      })
+
+    },
+
+    async getPlace() {
+      let [error, data] = await getPlaceByLocation(this.lat, this.lon)
+
+      if (error) {
+        console.log(error)
+        this.locationIsLoading = false
+        return
+      } else {
+        this.value = data[0].name
+        this.locationIsLoading = false
+        this.search()
+      }
+    }
   }
 }
 </script>
@@ -31,10 +99,11 @@ export default {
   display: flex;
   justify-content: space-between;
   gap: 16px;
+  position: relative;
 
   &__input {
-    width: 200px;
-    padding: 8px 10px;
+    width: 100%;
+    padding: 12px 16px;
     font-size: 20px;
     border-radius: 8px;
     border: none;
@@ -45,14 +114,46 @@ export default {
     }
   }
 
+  &__buttons {
+    position: absolute;
+    right: 12px;
+    bottom: 50%;
+    transform: translateY(50%);
+    display: flex;
+    align-items: center;
+  }
+
   &__button {
-    background-color: #21518c;
-    color: rgb(233, 233, 233);
-    border: none;
-    border-radius: 8px;
-    padding: 8px 24px;
-    font-size: 20px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    padding: 4px;
+    transition: all .3s;
+
+    &:hover {
+      background-color: #e8e8e8;
+    }
+
+    &--search {
+    }
+
+    &--location {
+    }
+  }
+
+  &__icon {
+    color: #494949;
+    font-size: 28px;
+
+  }
+}
+
+@media(max-width: 630px) {
+  .form {
+    width: calc(100% - 24px);
+    margin-left: 12px;
+    margin-right: 12px;
   }
 }
 

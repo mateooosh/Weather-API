@@ -142,6 +142,10 @@ export default {
     }
   }
 
+  &__main {
+    width: 150px;
+  }
+
   &__temperature {
     font-size: 42px;
     text-align: center;

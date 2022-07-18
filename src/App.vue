@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Input v-on:search="getData"/>
+    <Input @search="getData" @value-change="onValueChange"/>
     <Transition>
       <TodayFrame v-if="showTodayFrame" :data-source="todayWeather"/>
     </Transition>
@@ -18,12 +18,12 @@ import {defineComponent} from 'vue'
 import Input from './components/Input.vue'
 import TodayFrame from './components/TodayFrame.vue'
 import NextDays from './components/NextDays.vue'
-import {DAYS} from '../common/DAYS'
 import _ from 'lodash'
-import {getActualWeatherForPlace, getNextDays} from '@/components/weather/weather.api'
+import {getActualWeatherForPlace, getNextDays, getPlaceByLocation} from '@/components/weather/weather.api'
 import {DailyWeatherModel} from '@/models/DailyWeatherModel'
-import {TodayWeatherModel} from "@/models/TodayWeatherModel";
-import {firstLetterToUppercase} from "@/common/utils";
+import {TodayWeatherModel} from "@/models/TodayWeatherModel"
+import {firstLetterToUppercase} from "@/common/utils"
+
 
 export default defineComponent({
   name: 'App',
@@ -32,6 +32,7 @@ export default defineComponent({
     TodayFrame,
     NextDays
   },
+
   data() {
     return {
       showTodayFrame: false,
@@ -41,12 +42,18 @@ export default defineComponent({
       show: false
     }
   },
+
   computed: {
     dailyNextDays() {
       return _.slice(this.nextDays?.daily, 1, this.nextDays?.daily?.length)
     }
   },
+
   methods: {
+    onValueChange(value) {
+      this.query = value
+    },
+
     async getData(value) {
       this.showTodayFrame = false
       this.showNextDaysFrames = false
@@ -89,7 +96,7 @@ export default defineComponent({
   transform: translateY(0px);
 }
 
-.v-enter-from{
+.v-enter-from {
   transform: translateY(50px);
 }
 
