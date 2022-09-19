@@ -1,7 +1,12 @@
 <template>
   <Transition>
     <form class="form" v-if="showForm" @submit.prevent="search">
-      <input v-model="value" ref="input" type="text" class="form__input" placeholder="Location">
+      <input :value="modelValue"
+             @input="$emit('update:modelValue', $event.target.value)"
+             ref="input"
+             type="text"
+             class="form__input"
+             placeholder="Location">
       <div class="form__buttons">
         <div @click.prevent="getLocation" class="form__button form__button--location">
           <map-marker-outline class="form__icon"/>
@@ -17,10 +22,11 @@
 
 <script>
 import {getPlaceByLocation} from '@/components/weather/weather.api'
-import { Magnify, MapMarkerOutline } from 'mdue'
+import {Magnify, MapMarkerOutline} from 'mdue'
 
 export default {
   name: 'Input',
+  props: ['modelValue'],
   components: {
     Magnify,
     MapMarkerOutline
@@ -28,7 +34,6 @@ export default {
 
   data() {
     return {
-      value: '',
       showForm: false,
       lat: null,
       lon: null,
@@ -43,26 +48,16 @@ export default {
     }, 100)
   },
 
-  watch: {
-    value () {
-      this.emitValueChange()
-    }
-  },
-
   methods: {
-    emitValueChange() {
-      this.$emit('value-change', this.value)
-    },
-
-    search () {
-      this.$emit('search', this.value)
+    search() {
+      this.$emit('search', this.modelValue)
       this.$refs.input.blur()
     },
 
-    async getLocation () {
+    async getLocation() {
       this.locationIsLoading = true
       await navigator.geolocation.getCurrentPosition(position => {
-        const { latitude, longitude } = position.coords
+        const {latitude, longitude} = position.coords
         this.lat = latitude
         this.lon = longitude
 
@@ -163,7 +158,7 @@ export default {
   transform: translateY(0px);
 }
 
-.v-enter-from{
+.v-enter-from {
   transform: translateY(50px);
 }
 

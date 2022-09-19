@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Input @search="getData" @value-change="onValueChange"/>
+    <Input @search="getData" v-model="query"/>
     <Transition>
       <TodayFrame v-if="showTodayFrame" :data-source="todayWeather"/>
     </Transition>
@@ -19,11 +19,12 @@ import Input from './components/Input.vue'
 import TodayFrame from './components/TodayFrame.vue'
 import NextDays from './components/NextDays.vue'
 import _ from 'lodash'
-import {getActualWeatherForPlace, getNextDays, getPlaceByLocation} from '@/components/weather/weather.api'
+import {getActualWeatherForPlace, getNextDays} from '@/components/weather/weather.api'
 import {DailyWeatherModel} from '@/models/DailyWeatherModel'
 import {TodayWeatherModel} from "@/models/TodayWeatherModel"
 import {firstLetterToUppercase} from "@/common/utils"
 
+const LAST_SEARCH_QUERY_KEY = 'lastSearchQuery'
 
 export default defineComponent({
   name: 'App',
@@ -35,6 +36,7 @@ export default defineComponent({
 
   data() {
     return {
+      query: '',
       showTodayFrame: false,
       showNextDaysFrames: false,
       todayWeather: TodayWeatherModel,
@@ -49,11 +51,15 @@ export default defineComponent({
     }
   },
 
-  methods: {
-    onValueChange(value) {
-      this.query = value
-    },
+  mounted () {
+    const lastSearchQuery = localStorage.getItem(LAST_SEARCH_QUERY_KEY)
+    if (lastSearchQuery) {
+      this.query = firstLetterToUppercase(lastSearchQuery)
+      this.getData(lastSearchQuery)
+    }
+  },
 
+  methods: {
     async getData(value) {
       this.showTodayFrame = false
       this.showNextDaysFrames = false
@@ -75,6 +81,8 @@ export default defineComponent({
         this.nextDays = DailyWeatherModel.fromJson(data)
         this.showNextDaysFrames = true
       }
+
+      localStorage.setItem(LAST_SEARCH_QUERY_KEY, value)
     }
   }
 })
